@@ -34,13 +34,22 @@ jobs:
         working-directory: app
         run: flutter pub get
 
-      - name: Build release APK
-        working-directory: app
-        run: flutter build apk --release
+      - name: Build release APK (gradle)
+        working-directory: app/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Collect APKs
+        run: |
+          find . -name "*.apk" -type f | head -20
+          mkdir -p out
+          find . -name "*.apk" -type f -exec cp {} out/ \;
+          ls -la out
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: dsh-go-crt-apk
-          path: app/build/app/outputs/flutter-apk/*.apk
+          path: out/*.apk
           if-no-files-found: error
