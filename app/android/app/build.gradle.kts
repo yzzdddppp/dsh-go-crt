@@ -33,7 +33,7 @@ fun buildMinuteVersionCode(): Int {
 }
 
 android {
-    namespace = "io.github.ccch1mneyyy.dsh_app.mine"
+    namespace = "io.github.ccch1mneyyy.dsh_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
